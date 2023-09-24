@@ -1,11 +1,11 @@
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<AppDbContext>();
+
 var app = builder.Build();
 
-app.MapGet("/", () =>
+app.MapGet("/", (AppDbContext db) =>
 {
-    Task task = new(Guid.NewGuid(), "new task", false);
-    Task task2 = new(Guid.NewGuid(), "new task 2", true);
-    return new Task[] { task, task2 };
+    return db.Tasks;
 });
 
 app.Run();
