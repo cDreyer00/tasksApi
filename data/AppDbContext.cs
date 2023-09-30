@@ -8,7 +8,7 @@ public class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(GetConnString_Option2());
+        optionsBuilder.UseSqlServer(GetConnString_Option1());
     }
 
     string GetConnString_Option1()
