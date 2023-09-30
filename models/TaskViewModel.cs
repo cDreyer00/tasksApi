@@ -4,6 +4,6 @@ public class TaskViewModel
 
     public Task MapTo()
     {
-        return new Task(Title, false);
+        return new Task(Guid.NewGuid(), Title, false);
     }
 }

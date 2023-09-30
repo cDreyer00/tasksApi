@@ -1,4 +1,5 @@
 using DotNetEnv;
+
 Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var app = builder.Build();
 
 app.MapGet("/", (AppDbContext db) =>
 {
-    return "Hello World";
+    return $"Hello World";
 });
 
 app.MapGet("/api/tasks", (AppDbContext db) =>
