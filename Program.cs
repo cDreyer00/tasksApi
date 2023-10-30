@@ -1,4 +1,5 @@
 using DotNetEnv;
+using tasksApi.models;
 
 Env.Load();
 
@@ -19,7 +20,7 @@ app.MapGet("/api/tasks", (AppDbContext db) =>
 
 app.MapPost("/api/tasks", (TaskViewModel model, AppDbContext db) =>
 {
-    Task task = model.MapTo();
+    Task task = model.MapToTask();
     db.Add(task);
     db.SaveChanges();
 
@@ -38,16 +39,13 @@ app.MapDelete("/api/tasks/{id}", (Guid id, AppDbContext db) =>
     return Results.StatusCode(StatusCodes.Status200OK);
 });
 
-app.MapPut("/api/complete-task/{id}", (Guid id, AppDbContext db) =>
+app.MapPut("/api/tasks", (TaskViewModel model, AppDbContext db) =>
 {
-    Task t = db.Tasks.FirstOrDefault(t => t.Id == id);
-    if (t == null)
+    Task task = model.CopyValuesToTask(db);
+    if (task == null)
         return Results.StatusCode(StatusCodes.Status404NotFound);
 
-    t.Done = true;
-    db.Update(t);
     db.SaveChanges();
-
     return Results.StatusCode(StatusCodes.Status200OK);
 });
 
